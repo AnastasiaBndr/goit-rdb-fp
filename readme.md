@@ -1,5 +1,6 @@
 -- ЗАВАНТАЖЕННЯ ДАНИХ --
 
+```
 CREATE SCHEMA IF NOT EXISTS `pandemic`;
 USE `pandemic`;
 
@@ -10,6 +11,8 @@ CREATE TABLE IF NOT EXISTS `pandemic`.`countries` (
   PRIMARY KEY (`id`));
   
   SELECT COUNT(*) FROM infectious_cases;
+
+```
   
 -- НОРМАЛІЗАЦІЯ ТАБЛИЦЬ --
 
