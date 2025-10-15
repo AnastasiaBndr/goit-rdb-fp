@@ -67,7 +67,9 @@ DROP COLUMN `code`;
 ## Аналіз даних
 
 ```
-SELECT country_id, MIN(Number_rabies) as min , AVG(Number_rabies) as `avg`, MAX(Number_rabies) as max
+SELECT country_id, MIN(Number_rabies) as min , 
+AVG(Number_rabies) as `avg`, 
+MAX(Number_rabies) as max
 from infections
 WHERE Number_rabies !=''
 GROUP BY country_id
