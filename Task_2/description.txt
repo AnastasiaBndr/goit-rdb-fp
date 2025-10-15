@@ -1,0 +1,48 @@
+1. Нормалізуйте таблицю infectious_cases до 3ї нормальної форми. Збережіть у цій же схемі дві таблиці з нормалізованими даними.
+
+Спершу за допомогою команди створюю нову таблицю countries. У неї є поля id, entity, code. id - це первинний ключ.
+
+CREATE TABLE IF NOT EXISTS `pandemic`.`countries` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Entity` VARCHAR(60) NULL,
+  `Code` VARCHAR(10) NULL,
+  PRIMARY KEY (`id`));
+
+Далі вставляю у стовпці entity та code вибрані унікальні значення із відповідних сповпців таблиці infections_cases.
+  
+  INSERT INTO countries (Entity,`Code`)
+  SELECT DISTINCT Entity,`Code`
+  FROM infectious_cases;
+
+Змінюю назву таблиці та додаю нову колонку country_id для нормалізації.
+
+ALTER TABLE infectious_cases
+RENAME TO infections;
+
+ALTER TABLE infections 
+ADD COLUMN country_id INT;
+
+Далі вимикаю safe_update щоб мати можливість вставити значення у колонку countries_id. За допомогою join вставляю відповідні значення з id countries до countries_id. Також додаю foreign_key до цього стопвця.
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE infections i
+JOIN countries c ON i.Entity = c.Entity AND i.Code = c.Code
+SET i.country_id = c.id;
+
+SET SQL_SAFE_UPDATES = 1;
+
+-- додаємо foreign_key --
+
+ALTER TABLE infections
+ADD CONSTRAINT fk_country
+FOREIGN KEY (country_id)
+REFERENCES countries(id);
+
+Вкінці видаляю зайві стовпці, що залишилися, із таблиці infections.
+
+ALTER TABLE infections
+DROP COLUMN entity,
+DROP COLUMN `code`;
+
+Результати створених таблиць наведені у скриншотах countries.png, infections.png
