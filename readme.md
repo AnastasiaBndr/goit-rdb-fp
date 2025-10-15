@@ -1,4 +1,4 @@
-Завантаження даних
+## Завантаження даних
 
 ```
 CREATE SCHEMA IF NOT EXISTS `pandemic`;
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `pandemic`.`countries` (
 
 ```
   
-Нормалізація таблиць
+## Нормалізація таблиць
 
 Вставляємо у countries відповідні значення із таблиці infectious_cases
 
@@ -64,7 +64,7 @@ DROP COLUMN entity,
 DROP COLUMN `code`;
 ```
 
-АНАЛІЗ ДАНИХ
+## Аналіз даних
 
 ```
 SELECT country_id, MIN(Number_rabies) as min , AVG(Number_rabies) as `avg`, MAX(Number_rabies) as max
@@ -75,7 +75,7 @@ ORDER BY `avg` DESC
 LIMIT 10;
 ```
 
-ПОБУДОВА КОЛОНКИ РІЗНИЦІ В РОКАХ
+## Побудова колонки різниці в роках
 
 ```
 SELECT (MAKEDATE(`Year`,1)) as `January 1`, 
@@ -84,7 +84,7 @@ TIMESTAMPDIFF(YEAR,MAKEDATE(`Year`,1), curdate()) as difference
 from infections;
 ```
 
-ВЛАСНА ФУНКЦІЯ
+## Власна функція
 
 ```
 DELIMITER //
